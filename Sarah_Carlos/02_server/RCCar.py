@@ -4,7 +4,7 @@ from __future__ import print_function
 import RPi.GPIO as GPIO
 from servo import Servo
 from dcmotor import DCMotor
-from batsensor import BatSensor
+#from batsensor import BatSensor
 
 
 class RCCar(object):
@@ -12,7 +12,7 @@ class RCCar(object):
     def __init__(self):
         GPIO.setmode(GPIO.BCM)
 
-        self.direction = Servo(18, (-45, 45), (72.5, 162.5))  # board pin: 12
+        self.direction = Servo(27, (-45, 45), (72.5, 162.5))  # board pin: 13
         self.direction.trim = -1
         self.front_motor = DCMotor(20, 6, 13)  # board pin: 38, 31, 33
         self.rear_motor = DCMotor(21, 19, 26)  # board pin: 40, 35, 37
@@ -21,32 +21,11 @@ class RCCar(object):
         self.w_angle = self.direction.angle
         self.mov = 'quieto'
 
+        """
         self.rear_sensor = BatSensor(17, 27, rango=(10, 80), continuous=0.2)  # board pin: 11, 13
         self.front_left_sensor = BatSensor(22, 10, rango=(10, 80), continuous=0.2)  # board pin: 15, 19
         self.front_right_sensor = BatSensor(9, 11, rango=(10, 80), continuous=0.2)  # board pin: 21, 23
-
-        self._in_use = False
-
-    @property
-    def in_use(self):
-        return self._in_use
-
-    @in_use.setter
-    def in_use(self, value):
-        if bool(value):
-            # self.service_led.on()
-            self._in_use = True
-        else:
-            # self.service_led.blink(1)
-            self._in_use = False
-
-    def start(self):
-        if self.in_use:
-            return False
-
-        self.in_use = True
-
-        # encender los motores y eso
+        """
 
     def stop(self):
         self.in_use = False
@@ -101,6 +80,10 @@ class RCCar(object):
             self.rear_motor.release()
 
     def survival_instinct(self):
+        return false
+    
+    def survival_instinct_not_in_use(self):
+        """ esta funcion no es ta en uso """
         limit = 0.8 * max(self.front_left_sensor._rango)
         
         rear = self.rear_sensor.avg
