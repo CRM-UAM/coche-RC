@@ -80,7 +80,7 @@ class RCCar(object):
             self.rear_motor.release()
 
     def survival_instinct(self):
-        return false
+        return False
     
     def survival_instinct_not_in_use(self):
         """ esta funcion no es ta en uso """
